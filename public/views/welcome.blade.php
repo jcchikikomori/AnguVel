@@ -33,12 +33,24 @@
             .title {
                 font-size: 96px;
             }
+
+            .note {
+                font-family: arial;
+                font-size: 20px;
+                font-weight: normal;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
                 <div class="title">Laravel 5</div>
+                <p class="note">
+                    Although it works, you've still entered the wrong path<br />
+                    Here's you can do: Launch this app in /web using NodeJS Script<br /><br />
+                    $ npm start<br /><br />
+                    NOTE: This page represents that your API is working!
+                </p>
             </div>
         </div>
     </body>
