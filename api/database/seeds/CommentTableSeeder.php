@@ -1,5 +1,10 @@
 <?php
 
+/* 
+ * Make sure that App\Model is loaded
+ */
+use App\Comment;
+
 use Illuminate\Database\Seeder;
 
 class CommentTableSeeder extends Seeder

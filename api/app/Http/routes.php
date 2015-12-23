@@ -26,6 +26,28 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
+Route::group(['middleware' => ['auth']], function () {
+	// CATCH ALL ROUTE =============================  
+	// all routes that are not home or api will be redirected to the frontend 
+	// this allows angular to route them 
+    Route::get('{view}', function ($view) {
+	    try {
+	      return view($view);
+	    } catch (\Exception $e) {
+	      //abort(404);
+    	  //Redirecting to index since were using API
+	    	return View::make('index');
+	    }
+	})->where('view', '.*');
 });
+
+Route::group(['prefix' => 'api'], function() {
+    // since we will be using this just for CRUD, we won't need create and edit
+    // Angular will handle both of those forms
+    // this ensures that a user can't access api/create or api/edit when there's nothing there
+
+    //Routing using RESTful
+    Route::resource('comments', 'CommentController', 
+        array('only' => array('index', 'store', 'destroy')));
+});
+
