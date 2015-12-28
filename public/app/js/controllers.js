@@ -1,34 +1,62 @@
-/*
- * This is how controller could manipulate elements in AngularJS with directives
- */
-angular.module('F1FeederApp.controllers', []).
+angular.module('mainCtrl', [])
 
-  /* Drivers controller */
-  controller('driversController', function($scope, ergastAPIservice) {
-    $scope.nameFilter = null;
-    $scope.driversList = [];
-    $scope.searchFilter = function (driver) {
-        var re = new RegExp($scope.nameFilter, 'i');
-        return !$scope.nameFilter || re.test(driver.Driver.givenName) || re.test(driver.Driver.familyName);
-    };
+    // inject the Comment service into our controller
+    .controller('mainController', function ($scope, $http, Comment) {
+        // object to hold all the data for the new comment form
+        $scope.commentData = {};
 
-    ergastAPIservice.getDrivers().success(function (response) {
-        //Digging into the response to get the relevant data
-        $scope.driversList = response.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+        // loading variable to show the spinning loading icon
+        $scope.loading = true;
+
+        // get all the comments first and bind it to the $scope.comments object
+        // use the function we created in our service
+        // GET ALL COMMENTS ==============
+        Comment.get()
+            .success(function (data) {
+                $scope.comments = data;
+                $scope.loading = false;
+            });
+
+        // function to handle submitting the form
+        // SAVE A COMMENT ================
+        $scope.submitComment = function () {
+            $scope.loading = true;
+
+            // save the comment. pass in comment data from the form
+            // use the function we created in our service
+            Comment.save($scope.commentData)
+                .success(function (data) {
+
+                    // if successful, we'll need to refresh the comment list
+                    Comment.get()
+                        .success(function (getData) {
+                            $scope.comments = getData;
+                            $scope.loading = false;
+                        });
+
+                })
+                .error(function (data) {
+                    console.log(data);
+                });
+        };
+
+        // function to handle deleting a comment
+        // DELETE A COMMENT ====================================================
+        $scope.deleteComment = function (id) {
+            $scope.loading = true;
+
+            // use the function we created in our service
+            Comment.destroy(id)
+                .success(function (data) {
+
+                    // if successful, we'll need to refresh the comment list
+                    Comment.get()
+                        .success(function (getData) {
+                            $scope.comments = getData;
+                            $scope.loading = false;
+                        });
+
+                });
+        };
+
     });
-  }).
-
-  /* Driver controller */
-  controller('driverController', function($scope, $routeParams, ergastAPIservice) {
-    $scope.id = $routeParams.id;
-    $scope.races = [];
-    $scope.driver = null;
-
-    ergastAPIservice.getDriverDetails($scope.id).success(function (response) {
-        $scope.driver = response.MRData.StandingsTable.StandingsLists[0].DriverStandings[0];
-    });
-
-    ergastAPIservice.getDriverRaces($scope.id).success(function (response) {
-        $scope.races = response.MRData.RaceTable.Races; 
-    }); 
-  });

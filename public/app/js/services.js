@@ -1,35 +1,27 @@
-angular.module('F1FeederApp.services', [])
-.factory('ergastAPIservice', function($http) {
+angular.module('commentService', [])
 
-  // ergastAPI is a part of a http API for Angular
-  var ergastAPI = {};
+    .factory('Comment', function($http) {
 
-  ergastAPI.getDrivers = function() {
-    return $http({
-      method: 'JSONP', 
-      url: 'http://ergast.com/api/f1/2013/driverStandings.json?callback=JSON_CALLBACK'
+      return {
+        // get all the comments
+        get : function() {
+          return $http.get('/api/comments');
+        },
+
+        // save a comment (pass in comment data)
+        save : function(commentData) {
+          return $http({
+            method: 'POST',
+            url: '/api/comments',
+            headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
+            data: $.param(commentData)
+          });
+        },
+
+        // destroy a comment
+        destroy : function(id) {
+          return $http.delete('/api/comments/' + id);
+        }
+      }
+
     });
-  }
-
-  ergastAPI.getDriverDetails = function(id) {
-    return $http({
-      method: 'JSONP', 
-      url: 'http://ergast.com/api/f1/2013/drivers/'+ id +'/driverStandings.json?callback=JSON_CALLBACK'
-    });
-  }
-
-  ergastAPI.getDriverRaces = function(id) {
-    return $http({
-      method: 'JSONP', 
-      url: 'http://ergast.com/api/f1/2013/drivers/'+ id +'/results.json?callback=JSON_CALLBACK'
-    });
-  }
-
-  if (!ergastAPI) {
-    document.write('<p>WARNING: NO ANY DATA RECIEVED<br />Make sure you have a stable network connection</p>');
-  } else {
-    return ergastAPI;
-  }
-
-  // return ergastAPI;
-});

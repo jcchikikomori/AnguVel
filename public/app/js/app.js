@@ -1,24 +1,15 @@
-var F1FeederApp = angular.module('F1FeederApp', [
-  'F1FeederApp.services',
-  'F1FeederApp.controllers',
-  'ngRoute'
-]);
+var commentApp = angular.module('commentApp', ['mainCtrl', 'commentService']);
 
 //Routes
-F1FeederApp.config(['$routeProvider', function($routeProvider, $templateCache) {
-  $routeProvider.
-    when("/drivers", {
-        templateUrl: "partials/drivers.html", controller: "driversController"
-    }).
-	when("/drivers/:id", {
-        templateUrl: "partials/driver.html", controller: "driverController"
-    }).
-    otherwise({
-        redirectTo: '/drivers'
-    });
-    // use the HTML5 History API
-    // $locationProvider.html5Mode(true);
-}]);
+//commentApp.config(['$routeProvider', function($routeProvider, $templateCache) {
+//  $routeProvider.
+//    when("/comments", {
+//        controller: "mainController"
+//    }).
+//    otherwise({
+//        redirectTo: '/comments'
+//    });
+//}]);
 
 //F1FeederApp.run(function($templateCache) {
 //    $templateCache.put('/drivers', '');
