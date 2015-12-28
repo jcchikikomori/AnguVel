@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('login', function () {
+	return view('welcome');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -26,20 +30,21 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['auth']], function () {
-	// CATCH ALL ROUTE =============================  
-	// all routes that are not home or api will be redirected to the frontend 
-	// this allows angular to route them 
-    Route::get('{view}', function ($view) {
-	    try {
-	      return view($view);
-	    } catch (\Exception $e) {
-	      //abort(404);
-    	  //Redirecting to index since were using API
-	    	return View::make('index');
-	    }
-	})->where('view', '.*');
-});
+//Route::group(['middleware' => ['auth']], function () {
+//	// CATCH ALL ROUTE =============================
+//	// all routes that are not home or api will be redirected to the frontend
+//	// this allows angular to route them
+//    Route::get('{view}', function ($view) {
+//	    try {
+//	      return view($view);
+//	    } catch (\Exception $e) {
+//	      //abort(404);
+//    	  //Redirecting to index since were using API
+//	    	//return View::make('index');
+//			return view('welcome');
+//	    }
+//	})->where('view', '.*');
+//});
 
 Route::group(['prefix' => 'api'], function() {
     // since we will be using this just for CRUD, we won't need create and edit
