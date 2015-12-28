@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+//IMPORTANT when manipulating JSON data using Response()
+use App\Comment;
+use App\Input;
+
 class CommentController extends Controller
 {
     /**
@@ -16,7 +20,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return Response::json(Comment::get());
+        return Response()->json(Comment::get());
     }
     
     /**
@@ -24,14 +28,14 @@ class CommentController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
         Comment::create(array(
             'author' => Input::get('author'),
             'text' => Input::get('text')
         ));
     
-        return Response::json(array('success' => true));
+        return Response()->json(array('success' => true));
     }
     
     /**
@@ -44,6 +48,6 @@ class CommentController extends Controller
     {
         Comment::destroy($id);
     
-        return Response::json(array('success' => true));
+        return Response()->json(array('success' => true));
     }
 }

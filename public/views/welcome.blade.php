@@ -44,12 +44,15 @@
     <body>
         <div class="container">
             <div class="content">
+                <p class="note">
+                    This API is powered by
+                </p>
                 <div class="title">Laravel 5</div>
                 <p class="note">
-                    Although it works, you've still entered the wrong path<br />
-                    Here's you can do: Launch this app in /web using NodeJS Script<br /><br />
-                    $ npm start<br /><br />
-                    NOTE: This page represents that your API is working!
+                    If you are looking for the app, you've entered the wrong place!<br />
+                    Here's you can do: Launch this app <a href="../../public">here</a><br /><br />
+                    NOTE: This page represents that your API is working!<br /><br />
+                    Rendered in <code>your_app_dir/public/views</code>
                 </p>
             </div>
         </div>
