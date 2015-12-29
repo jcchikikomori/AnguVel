@@ -11,6 +11,12 @@ class Comment extends Model
      *
      * @var string
      */
-    protected $fillable = [];
+
+    /* Manually set variables for CRUD especially filling data
+     * Reference: http://stackoverflow.com/questions/22280136/massassignmentexception-in-laravel
+     */
+    protected $fillable = array('author', 'text');
+
+    //Set table
     protected $table = 'comments';
 }
