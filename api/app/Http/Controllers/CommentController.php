@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 //IMPORTANT when manipulating JSON data using Response()
 use App\Comment;
-use App\Input;
+use App\Http\Input;
 
 class CommentController extends Controller
 {
@@ -31,8 +31,8 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         Comment::create(array(
-            'author' => Input::get('author'),
-            'text' => Input::get('text')
+            'author' => $request->input('author'),
+            'text' => $request->input('text')
         ));
     
         return Response()->json(array('success' => true));
