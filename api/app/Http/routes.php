@@ -11,14 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('login', function () {
-	return view('welcome');
-});
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -54,5 +46,9 @@ Route::group(['prefix' => 'api'], function() {
     //Routing using RESTful
     Route::resource('comments', 'CommentController', 
         array('only' => array('index', 'store', 'destroy')));
+    //can route using get()
+    Route::get('/', function () {
+        return view('welcome');
+    });
 });
 
